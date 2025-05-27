@@ -25,8 +25,24 @@ void combat(Entity& player, Entity enemy) {
 
     while (player.hp > 0 && enemy.hp > 0) {
         std::cout << "\n--- Player Turn ---\n";
-        std::cout << "You attack the " << enemy.name << " for " << player.attack << " damage!\n";
-        enemy.hp -= player.attack;
+        std::cout << "Choose an attack:\n";
+        for (size_t i = 0; i < player.attacks.size(); ++i) {
+            std::cout << i + 1 << ". " << player.attacks[i].name << "\n";
+        }
+
+        int choice;
+        std::cin >> choice;
+        if (choice < 1 || choice > static_cast<int>(player.attacks.size())) {
+            std::cout << "Invalid choice. Using default attack.\n";
+            int dmg = player.attack;
+            std::cout << "You attack the " << enemy.name << " for " << dmg << " damage!\n";
+            enemy.hp -= dmg;
+        } else {
+            EnemyAttack selectedAttack = player.attacks[choice - 1];
+            int dmg = selectedAttack.minDamage + (std::rand() % (selectedAttack.maxDamage - selectedAttack.minDamage + 1));
+            std::cout << "You use " << selectedAttack.name << " and deal " << dmg << " damage!\n";
+            enemy.hp -= dmg;
+        }
 
         if (enemy.hp <= 0) {
             std::cout << "✅ You defeated the " << enemy.name << "!\n";
@@ -57,5 +73,4 @@ void combat(Entity& player, Entity enemy) {
     std::cout << "\nPress any key to continue...\n";
     _getch();
 }
-
 #endif // COMBAT_H_INCLUDED
