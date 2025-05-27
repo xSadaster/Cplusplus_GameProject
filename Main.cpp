@@ -13,15 +13,6 @@ else if (tileIndex == 99) tile = &copy;  //kopioi ja vaihda numeroksi oma sekä 
 ===> mene sinne
 */
 
-
-
-
-
-
-
-
-
-
 #include "mapfiles/testiprojumappi.h"
 #include "mapfiles/tileproperties.h"
 
@@ -86,8 +77,17 @@ int main() {
                 if (chance < tile->enemychance) {                           
                     std::cout << "Enemy spawned on tile " << tile->gf << "!" << std::endl;
                     // KUTSUKAA MOBISPAWNAUSKOODI TÄSSÄ
-                    Entity player; // TODO: initialize player entity properly
-                    Entity enemy;  // TODO: initialize enemy entity properly
+                    Entity player = { "Player",
+                                    100,
+                                    10,
+                                    { { "Sword Slash", 8, 12 }, { "Fireball", 10, 15 } }
+                    };
+
+                    Entity enemy = { "Goblin",
+                                    50,
+                                    5,
+                                    { { "Bite", 3, 7 } }
+                    };
                     combat(player, enemy);
                 }
             }
