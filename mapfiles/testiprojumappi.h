@@ -13,6 +13,7 @@ kommentti jatkuu lisäykseen
 */
 
 
+#include <string>
 #include <iostream>
 #include <vector>
 #define CURSOR_TOP_LEFT "\033[H"

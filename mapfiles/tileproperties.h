@@ -15,6 +15,7 @@ jatkuu wasdmove.h ====>
 
 */
 
+#include <string>
 #include "testiprojumappi.h"
 tileproperties barriervaaka {
     1,

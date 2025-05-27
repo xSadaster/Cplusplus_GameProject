@@ -22,8 +22,10 @@ else if (tileIndex == 99) tile = &copy;  //kopioi ja vaihda numeroksi oma sekä 
 
 
 
-#include "testiprojumappi.h"
-#include "tileproperties.h"
+#include "mapfiles/testiprojumappi.h"
+#include "mapfiles/tileproperties.h"
+
+#include "CBT (combat tai cock and ball torture)\CBT.h"
 #include <iostream>
 #include <conio.h>
 #include <cstdlib>
@@ -84,6 +86,9 @@ int main() {
                 if (chance < tile->enemychance) {                           
                     std::cout << "Enemy spawned on tile " << tile->gf << "!" << std::endl;
                     // KUTSUKAA MOBISPAWNAUSKOODI TÄSSÄ
+                    Entity player; // TODO: initialize player entity properly
+                    Entity enemy;  // TODO: initialize enemy entity properly
+                    combat(player, enemy);
                 }
             }
         }
