@@ -34,8 +34,8 @@ struct tileproperties {
     float enemychance = 0.0f; 
 };
 
-const int map_W = 20;
-const int map_H = 10;
+const int map_W = 40;
+const int map_H = 20;
 
  void printmap(const int map[map_H * map_W], const tileproperties& puu,const tileproperties& vesi,const tileproperties& tie,const tileproperties& kivi,const tileproperties& copy,const tileproperties& endblock, const tileproperties& barrierpysty, const tileproperties& barriervaaka, int playerX, int playerY) {
     std::cout << CURSOR_TOP_LEFT;

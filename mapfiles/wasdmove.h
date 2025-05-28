@@ -63,7 +63,7 @@ inline void wasdMoveLoop(
                 else if (tileIndex == 10) tile = &puu;
                 else if (tileIndex == 11) tile = &vesi;
                 else if (tileIndex == 12) tile = &tie;
-                else if (tileIndex == 99) tile = &kivi;
+                else if (tileIndex == 13) tile = &kivi;
                 else if (tileIndex == 99) tile = &copy;
                 if (tile && !tile->wall) {
                     playerX = newX;
