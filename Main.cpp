@@ -1,17 +1,17 @@
-/* 
+    /* 
 
-jos haluutte lisää erillaisia maastoja tähän niin 
-(muista lisää takaisin copy kohdat)
+    jos haluutte lisää erillaisia maastoja tähän niin 
+    (muista lisää takaisin copy kohdat)
 
-testausproju.cpp
-1. 
-else if (tileIndex == 99) tile = &copy;  //kopioi ja vaihda numeroksi oma sekä nimeksi
-2. printmap(map1, puu, vesi, tie, ,kivi copy, endblock, barrierpysty, barriervaaka, playerX, playerY);
- tosta copy muuta myös muista
- 
- kommentti jatkuu testiprojumappi.h
-===> mene sinne
-*/
+    testausproju.cpp
+    1. 
+    else if (tileIndex == 99) tile = &copy;  //kopioi ja vaihda numeroksi oma sekä nimeksi
+    2. printmap(map1, puu, vesi, tie, ,kivi copy, endblock, barrierpysty, barriervaaka, playerX, playerY);
+    tosta copy muuta myös muista
+    
+    kommentti jatkuu testiprojumappi.h
+    ===> mene sinne
+    */
 
 #include "mapfiles/testiprojumappi.h"
 #include "mapfiles/tileproperties.h"
