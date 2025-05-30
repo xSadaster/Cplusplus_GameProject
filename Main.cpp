@@ -15,12 +15,12 @@
 
 #include "mapfiles/testiprojumappi.h"
 #include "mapfiles/tileproperties.h"
-
-#include "CBT (combat tai cock and ball torture)\CBT.h"
+#include "Combat.h"
 #include <iostream>
 #include <conio.h>
 #include <cstdlib>
 #include <ctime>
+
 // Defining tiles
 
 int main() {
