@@ -8,6 +8,7 @@
 #include <ctime> // For time(), also a part of the random number generation
 #include <vector> 
 #include <string>
+#include <map>
 using namespace std;
 
 // Helper function to get tileproperties pointer by tile index
@@ -19,12 +20,13 @@ const tileproperties* getTileByIndex(int tileIndex) {
     else if (tileIndex == 11) return &vesi;
     else if (tileIndex == 12) return &tie_tile;
     else if (tileIndex == 13) return &kivi;
+    else if (tileIndex == 55) return &shop_tile;
     else if (tileIndex == 99) return &copy_tile;
     else if (tileIndex == 77) return &boss_tile;
     return nullptr;
 }
 
-// Helper function to generate a random enemy
+// Helper function to generate a random enemy with varying stats (the +rand()%X )
 Enemy generateRandomEnemy() {
     int pick = rand() % 4;
     switch (pick) {
@@ -80,7 +82,7 @@ void setupMap(int* map1) {
         02, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 02,
         02, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 02,
         02, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 02,
-        02, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 02, 
+        02, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 55, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 02, 
         02, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 02,
         02, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 02,
         02, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 02,
@@ -93,13 +95,13 @@ void setupMap(int* map1) {
     };
     for (int i = 0; i < map_H * map_W; ++i) map1[i] = temp[i];
 }
-
-// The main game loop
-void gameLoop(Player* Playable_character, Inventory& inv, int* map1) {
+// The game runs on this.
+void gameplay_loop(Player* Playable_character, Inventory& inv, int* map1) {
     int playerX = 2, playerY = 2;
+    std::map<std::string, int> defeatedEnemies; // Track defeated enemy types
     while (true) {
         system("cls");
-        printmap(map1, puu, vesi, tie_tile, kivi, copy_tile, endblock, barrierpysty, barriervaaka, boss_tile, playerX, playerY);
+        printmap(map1, puu, vesi, tie_tile, kivi, copy_tile, endblock, barrierpysty, barriervaaka, boss_tile, shop_tile, playerX, playerY);
         char key = _getch();
         if (key == 'q') break;
         int newX = playerX, newY = playerY;
@@ -119,8 +121,14 @@ void gameLoop(Player* Playable_character, Inventory& inv, int* map1) {
                 if (chance < tile->enemychance) {
                     Enemy enemy = generateRandomEnemy();
                     bool survived = Combat(*Playable_character, inv, enemy);
-                    if (!survived) {
+                    if (survived) {
+                        defeatedEnemies[enemy.getType()]++;
+                    } else {
                         cout << "Game Over!\n";
+                        cout << "\nEnemies defeated this run:\n";
+                        for (const auto& pair : defeatedEnemies) {
+                            cout << pair.first << ": " << pair.second << endl;
+                        }
                         delete Playable_character;
                         cout << "Press any key to exit...";
                         _getch();
@@ -128,26 +136,63 @@ void gameLoop(Player* Playable_character, Inventory& inv, int* map1) {
                     }
                 }
             }
-            if (tileIndex == 77) {
+            if (tileIndex == 77) { // Boss tile
                 Boss boss;
                 system("cls");
                 cout << "You have encountered the Dragon!\n";
                 bool survived_boss = Combat(*Playable_character, inv, boss);
                 if (survived_boss) {
+                    defeatedEnemies["Boss"]++;
                     cout << "\nCongratulations! You defeated the Dragon and achieved the GOOD ENDING!\n";
+                    cout << "\nEnemies defeated this run:\n";
+                    for (const auto& pair : defeatedEnemies) {
+                        cout << pair.first << ": " << pair.second << endl;
+                    }
                     cout << "Press any key to exit...";
                     _getch();
                     delete Playable_character;
                     return;
                 } else {
                     cout << "Game Over!\n";
+                    cout << "\nEnemies defeated this run:\n";
+                    for (const auto& pair : defeatedEnemies) {
+                        cout << pair.first << ": " << pair.second << endl;
+                    }
                     delete Playable_character;
                     cout << "Press any key to exit...";
                     _getch();
                     return;
                 }
             }
+            if (tileIndex == 55) { // Shop tile
+                system("cls");
+                cout << "A shady looking person claims they can convert your health to attack damage, \ndo you accept their deal? (lose 20hp gain 2atk)\n";
+                cout << "1: Yes\n2: No\n> ";
+                char shopChoice = 0;
+                while (true) {
+                    shopChoice = _getch();
+                    if (shopChoice == '1' || shopChoice == '2') break;
+                }
+                if (shopChoice == '1') {
+                    if (Playable_character->getHP() > 20) {
+                        *Playable_character = *Playable_character - 20;
+                        *Playable_character = *Playable_character + 2;
+                        cout << "You feel weaker... but stronger at the same time! (-20 HP, +2 ATK)\n";
+                    } else {
+                        cout << "You don't have enough HP to make the deal!\n";
+                    }
+                } else {
+                    cout << "You walk away from the deal.\n";
+                }
+                cout << "Press any key to continue...";
+                _getch();
+                continue;
+            }
         }
+    }
+    cout << "\nEnemies defeated this run:\n";
+    for (const auto& pair : defeatedEnemies) {
+        cout << pair.first << ": " << pair.second << endl;
     }
     delete Playable_character;
 }
@@ -156,9 +201,9 @@ int main() {
     srand(static_cast<unsigned int>(time(nullptr)));
     Player* Playable_character = createPlayer(); // Run the player creation function
     Inventory inv; // Create an inventory
-    inv.addPotion(); inv.addPotion(); // add 2 potions to start with
+    // inv.addPotion(); inv.addPotion(); // add 2 potions to start with -- Handled in inventory constructor
     int map1[map_H * map_W];
     setupMap(map1); //setup map1
-    gameLoop(Playable_character, inv, map1); // Run the gameplay loop
+    gameplay_loop(Playable_character, inv, map1); // Run the gameplay loop
     return 0;
 }

@@ -1,5 +1,4 @@
-#ifndef COMBAT_H_INCLUDED
-#define COMBAT_H_INCLUDED
+#pragma once
 #include <iostream>
 #include <vector>
 #include <string>
@@ -75,4 +74,3 @@ bool Combat(Player& player, Inventory& inv, Enemy& enemy) {
     }
     return false;
 }
-#endif // COMBAT_H_INCLUDED

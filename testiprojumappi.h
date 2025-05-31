@@ -3,10 +3,10 @@ kommentti jatkuu lisäykseen
 1. void printmap(const int map[map_H * map_W], const tileproperties& puu,const tileproperties& vesi,const tileproperties& tie_tile,const tileproperties& kivi,const tileproperties& copy_tile,const tileproperties& endblock, const tileproperties& barrierpysty, const tileproperties& barriervaaka, int playerX, int playerY) {
  korvaa const tileproperties& copy_tile 
  2. else if (value == 13) {
-                std::cout << kivi.colour << kivi.gf << RESET;
+                cout << kivi.colour << kivi.gf << RESET;
             }
     else if (value == 99) {
-                std::cout << copy_tile.colour << copy_tile.gf << RESET;
+                cout << copy_tile.colour << copy_tile.gf << RESET;
             }
     korvaa omalla valuella sekä muuttujat
     jatkuu tileproperties ===>
@@ -23,6 +23,7 @@ kommentti jatkuu lisäykseen
 #define GREEN   "\033[32m"
 #define BROWN   "\033[38;5;52m"
 #define GRAY    "\033[90m"
+using namespace std;
 
 #ifndef TESTIPROJUMAPPI_H_INCLUDED
 #define TESTIPROJUMAPPI_H_INCLUDED
@@ -30,46 +31,47 @@ kommentti jatkuu lisäykseen
 struct tileproperties {
     bool wall; // 0 = no wall, 1 = wall
     char gf;
-    std::string colour;
+    string colour;
     float enemychance = 0.0f; 
 };
 
 const int map_W = 40;
 const int map_H = 20;
 
- void printmap(const int map[map_H * map_W], const tileproperties& puu,const tileproperties& vesi,const tileproperties& tie_tile,const tileproperties& kivi,const tileproperties& copy_tile,const tileproperties& endblock, const tileproperties& barrierpysty, const tileproperties& barriervaaka, const tileproperties& boss_tile, int playerX, int playerY) {
-    std::cout << CURSOR_TOP_LEFT;
+ void printmap(const int map[map_H * map_W], const tileproperties& puu,const tileproperties& vesi,const tileproperties& tie_tile,const tileproperties& kivi,const tileproperties& copy_tile,const tileproperties& endblock, const tileproperties& barrierpysty, const tileproperties& barriervaaka, const tileproperties& boss_tile, const tileproperties& shop_tile, int playerX, int playerY) {
+    cout << CURSOR_TOP_LEFT;
     for (int i = 0; i < map_H; i++) {
         for (int j = 0; j < map_W; j++) {
             if (i == playerX && j == playerY) {
-                std::cout << '@';
+                cout << '@';
                 continue;
             }
             int value = map[i * map_W + j];
             if (value == 1) {
-                std::cout << barriervaaka.colour << barriervaaka.gf << RESET;
+                cout << barriervaaka.colour << barriervaaka.gf << RESET;
             } else if (value == 2) {
-                std::cout << barrierpysty.colour << barrierpysty.gf << RESET;
+                cout << barrierpysty.colour << barrierpysty.gf << RESET;
             } else if (value == 0) {
-                std::cout << endblock.colour << endblock.gf << RESET;
+                cout << endblock.colour << endblock.gf << RESET;
             } else if (value == 10) {
-                std::cout << puu.colour << puu.gf << RESET;
+                cout << puu.colour << puu.gf << RESET;
             } else if (value == 11) {
-                std::cout << vesi.colour << vesi.gf << RESET;
+                cout << vesi.colour << vesi.gf << RESET;
             } else if (value == 12) {
-                std::cout << tie_tile.colour << tie_tile.gf << RESET;
+                cout << tie_tile.colour << tie_tile.gf << RESET;
             } else if (value == 13) {
-                std::cout << kivi.colour << kivi.gf << RESET;
+                cout << kivi.colour << kivi.gf << RESET;
             } else if (value == 99) {
-                std::cout << copy_tile.colour << copy_tile.gf << RESET;
+                cout << copy_tile.colour << copy_tile.gf << RESET;
             } else if (value == 77) {
-                std::cout << boss_tile.colour << boss_tile.gf << RESET;
+                cout << boss_tile.colour << boss_tile.gf << RESET;
+            } else if (value == 55) {
+                cout << shop_tile.colour << shop_tile.gf << RESET;
             } else {
-                std::cout << value;
+                cout << value;
             }
         }
-        std::cout << std::endl;
+        cout << endl;
     }
 }
-
 #endif // TESTIPROJUMAPPI_H_INCLUDED

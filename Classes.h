@@ -59,6 +59,17 @@ public:
     void act() override {
         cout << name << " attacks!" << endl; // Default action for player, will be overridden by subclasses
     }
+    // Operator overloading for Player: - for HP, + for ATK
+    Player operator-(int hp) const {
+        Player result = *this;
+        result.setHP(getHP() - hp);
+        return result;
+    }
+    Player operator+(int atk) const {
+        Player result = *this;
+        result.setATK(getATK() + atk);
+        return result;
+    }
 };
 
 // Player subclasses for different classes

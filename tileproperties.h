@@ -36,12 +36,13 @@ tileproperties puu {
     0, // 1 = no, 0 = yes
     'A',
     GREEN,
+    0.01f // 1% Chance for enemy to spawn
 };
 tileproperties tie_tile {
     0, // 1 = no, 0 = yes
     'H',
     BROWN,
-    0.75f // Chance for enemy to spawn
+    0.75f // 75% Chance for enemy to spawn
 };
 
 tileproperties vesi {
@@ -65,4 +66,12 @@ tileproperties boss_tile {
     YELLOW,
     // 1.0f // Always triggers a fight- 
     //EDIT: Removed and made separate logic to check for boss tile to start special fight
+};
+
+// Added a.. suspicious "shop" tile
+tileproperties shop_tile {
+    0, // walkable
+    'S',
+    YELLOW,
+    0.0f // No enemy spawn
 };

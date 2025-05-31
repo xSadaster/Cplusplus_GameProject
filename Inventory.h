@@ -7,7 +7,7 @@ private:
     int potions;
     const int maxPotions = 3;
 public:
-    Inventory() : potions(2) {} // Start with 2 potions
+    Inventory() : potions(2) {} // Start with 2 potions for ease of use, was a hassle before.
 
     bool addPotion() {
         if (potions < maxPotions) {
@@ -19,7 +19,6 @@ public:
             return false;
         }
     }
-
     bool usePotion() {
         if (potions > 0) {
             --potions;
