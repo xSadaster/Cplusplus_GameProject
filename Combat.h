@@ -1,15 +1,13 @@
+// Combat.h
+// Handles turn-based combat between player and enemy.
 #pragma once
 #include <iostream>
-#include <vector>
-#include <string>
-#include <cstdlib>
 #include <conio.h>
-#include <stack>
 #include "Inventory.h"
 #include "Classes.h"
 using namespace std;
 
-// Combat function
+// Combat function: returns true if player wins, false if defeated
 bool Combat(Player& player, Inventory& inv, Enemy& enemy) {
      system("cls"); // Clear the console before fight
     cout << "\n===== FIGHT: " << enemy.getName() << " =====\n";
@@ -22,12 +20,13 @@ bool Combat(Player& player, Inventory& inv, Enemy& enemy) {
             char key = _getch();
             if (key == '1') { action = 1; break; }
             if (key == '2') { action = 2; break; }
-            if (key == '3') { action = 3; break; } }
-        cout << endl; // Add space after input before action output
+            if (key == '3') { action = 3; break; }
+        }
+        cout << endl;
         if (action == 2) {
             if (inv.getCount() > 0) {
                 inv.usePotion();
-                int healAmount = 20 + rand() % 11; //Heal between 20 and 30 HP
+                int healAmount = 20 + rand() % 11;
                 player.setHP(player.getHP() + healAmount);
                 cout << "Healed for " << healAmount << "! Current HP: " << player.getHP() << endl;
             } else {
@@ -35,8 +34,8 @@ bool Combat(Player& player, Inventory& inv, Enemy& enemy) {
             }
             continue;
         } else if (action == 3) {
-            cout << enemy << endl; // Uses the overloaded operator<< to display enemy stats
-            continue; // Does not take a turn
+            cout << enemy << endl;
+            continue;
         }
         // Player attack 
         player.act();
@@ -44,18 +43,18 @@ bool Combat(Player& player, Inventory& inv, Enemy& enemy) {
         cout << "The " << enemy.getName() << " takes " << dmg << " damage!\n" << endl;
         enemy.setHP(enemy.getHP() - dmg);
         if (enemy.getHP() <= 0) {
-            system("cls"); // Clear the console before victory message
+            system("cls");
             cout << "You defeated the " << enemy.getName() << "!\n" << endl;
             // 50% chance to find a potion after victory, and only if inventory is not full
             if (inv.getCount() < 3 && (rand() % 100) < 50) {
-                inv.addPotion(); // potion acquisition text handled in Inventory class
+                inv.addPotion();
             }
             cout << "Press e to continue..." << endl;
             char cont;
             do {
                 cont = _getch();
-            } while (cont != 'e' && cont != 'E'); //Caps doesnt matter
-            return true; // True indicates victory
+            } while (cont != 'e' && cont != 'E');
+            return true;
         }
         // Enemy turn (polymorphic)
         enemy.act();
@@ -69,7 +68,7 @@ bool Combat(Player& player, Inventory& inv, Enemy& enemy) {
     }
     if (player.getHP() > 0 && enemy.getType() == "Boss") {
         cout << player.getName() << " has survived the encounter!\n";
-       cout << "And saved their village from the " << enemy.getName() << "!\n";
+        cout << "And saved their village from the " << enemy.getName() << "!\n";
         return true;
     }
     return false;
