@@ -7,7 +7,7 @@ private:
     int potions;
     const int maxPotions = 3;
 public:
-    Inventory() : potions(0) {}
+    Inventory() : potions(2) {} // Start with 2 potions
 
     bool addPotion() {
         if (potions < maxPotions) {
@@ -24,7 +24,7 @@ public:
         if (potions > 0) {
             --potions;
             cout << "Used a potion! Potions left: " << potions << endl;
-            // The hp restoration code could've been here
+            // The hp restoration code could've been here, but it was easier to handle in combat
             return true;
         } else {
             cout << "No potions left!" << endl;

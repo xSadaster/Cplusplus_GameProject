@@ -13,11 +13,12 @@ public:
 };
 
 // Derived Class
-class Character : public GameComponent {
-protected:
-    string name;
+class Character : public GameComponent { //Not used directly, but is a base class for Player and Enemy
+private:
     int hp;
     int atk;
+protected:
+    string name;
 public:
     // Default constructor
     Character() : name("NoName"), hp(1), atk(1) {}
@@ -42,29 +43,28 @@ public:
     }
 };
 
-// Player subclass
+// Player subclass- that hass a name, hp and atk
+// but all Player subclasses will have their own hp & atk
 class Player : public Character {
 public:
     Player() : Character("Player") {}
-    Player(string n, int h = 120, int a = 15, int p = 3)
+    Player(string n, int h = 120, int a = 15)
         : Character(n, h, a) {}
-    ~Player() {
-        cout << "It's over for " << name << "..." << endl;
-    }
+    ~Player() {} // No message because we don't want multiple destructor messages to clutter the output
 
     void show() const override {
         cout << "[Player] ";
         Character::show();
     }
     void act() override {
-        cout << name << " attacks with sword!" << endl;
+        cout << name << " attacks!" << endl; // Default action for player, will be overridden by subclasses
     }
 };
 
 // Player subclasses for different classes
 class Tank : public Player {
 public:
-    Tank(string n = "Tank") : Player(n, 100, 10, 2) {}
+    Tank(string n = "Tank") : Player(n, 100, 10) {}
     ~Tank() {} //no need for custom destructor message
     void act() override {
         cout << name << " blocks and counterattacks!" << endl;
@@ -73,7 +73,7 @@ public:
 
 class Warrior : public Player {
 public:
-    Warrior(string n = "Warrior") : Player(n, 80, 15, 2) {}
+    Warrior(string n = "Warrior") : Player(n, 80, 15) {}
     ~Warrior() {}
     void act() override {
         cout << name << " swings a mighty sword!" << endl;
@@ -82,7 +82,7 @@ public:
 
 class Berserker : public Player {
 public:
-    Berserker(string n = "Berserker") : Player(n, 60, 25, 1) {}
+    Berserker(string n = "Berserker") : Player(n, 60, 25) {}
     ~Berserker() {}
     void act() override {
         cout << name << " goes into a frenzy!" << endl;
@@ -96,7 +96,7 @@ private:
 public:
     Enemy() : Character("Enemy"), type("Goblin") {} //default constructor
     Enemy(string n, int h = 80, int a = 8, string t = "Goblin") : Character(n, h, a), type(t) {}
-    ~Enemy() { cout << "" << name << " defeated!" << endl; } // Destructor message
+    ~Enemy() {} // No custom destructor message because we handle that elsewhere.
 
     string getType() const { return type; }
     void setType(const string& t) { type = t; }
@@ -106,11 +106,22 @@ public:
         Character::show();
     }
     void act() override {
-        cout << name << " lunges at you!" << endl;
+        cout << name << " Attacks!" << endl; //
     }
-    // Operator overloading for output
+    // Operator overloading for output, has to use getters to access private members.
     friend ostream& operator<<(ostream& os, const Enemy& e) {
-        os << "[Enemy: " << e.type << "] " << e.name << " [HP: " << e.hp << ", ATK: " << e.atk << "]";
+        os << "[Enemy: " << e.type << "] " << e.getName() << " [HP: " << e.getHP() << ", ATK: " << e.getATK() << "]";
         return os;
+    }
+};
+
+// Boss subclass from enemy
+class Boss : public Enemy {
+public:
+    Boss(string n = "Dragon", int h = 120, int a = 25)
+        : Enemy(n, h, a, "Boss") {}
+    ~Boss() {}
+    void act() override {
+        cout << getName() << " breathes a massive wave of fire!" << endl;
     }
 };

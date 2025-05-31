@@ -1,6 +1,6 @@
 /* 
 tileproperties copy {
-    1, // 0 = no, 1 = yes
+    1, // 1 = no, 0 = yes
     '~',
     BLUE,
 };
@@ -27,40 +27,42 @@ tileproperties barrierpysty {
     '|',
     GRAY,
 };
-tileproperties endblock {
-    1, // 0 = no, 1 = yes
+tileproperties endblock { //corners of the map
+    1, // 1 = no, 0 = yes
     '+',
     GRAY,
 };
 tileproperties puu {
-    0, // 0 = no, 1 = yes
+    0, // 1 = no, 0 = yes
     'A',
     GREEN,
 };
 tileproperties tie_tile {
-    0, // 0 = no, 1 = yes
+    0, // 1 = no, 0 = yes
     'H',
     BROWN,
-    0.75f // Chance for enemy spawn
+    0.75f // Chance for enemy to spawn
 };
 
 tileproperties vesi {
-    1, // 0 = no, 1 = yes
+    1, // 1 = no, 0 = yes
     '~',
     BLUE,
 };
 tileproperties kivi {
-    1, // 0 = no, 1 = yes
+    1, // 1 = no, 0 = yes
     'M',
     GRAY,
 };tileproperties copy_tile {
-    1, // 0 = no, 1 = yes
+    1, // 1 = no, 0 = yes
     '~',
     BLUE,
 };
+//added boss tile
 tileproperties boss_tile {
     0, // 0 = walkable
     'B',
     YELLOW,
-    1.0f // Always triggers boss fight
+    // 1.0f // Always triggers a fight- 
+    //EDIT: Removed and made separate logic to check for boss tile to start special fight
 };
