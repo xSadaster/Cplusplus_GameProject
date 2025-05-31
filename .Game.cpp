@@ -101,7 +101,7 @@ void gameplay_loop(Player* Playable_character, Inventory& inv, int* map1) {
         system("cls");
         printmap(map1, puu, vesi, tie_tile, kivi, copy_tile, endblock, barrierpysty, barriervaaka, boss_tile, shop_tile, playerX, playerY);
         char key = _getch();
-        if (key == 'q') { //added confirmation to exit
+        if (key == 'q' || key == 'Q') { //added confirmation to exit
         cout << "Are you sure you want to quit? (y/n)\n";
             char confirm = _getch();
             if (confirm == 'y' || confirm == 'Y') {

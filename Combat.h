@@ -21,6 +21,17 @@ bool Combat(Player& player, Inventory& inv, Enemy& enemy) {
             if (key == '1') { action = 1; break; }
             if (key == '2') { action = 2; break; }
             if (key == '3') { action = 3; break; }
+            if (key == 'q' || key == 'Q') {
+                cout << "\nAre you sure you want to give up? (y/n)\n";
+                char confirm = _getch();
+                if (confirm == 'y' || confirm == 'Y') {
+                    cout << "\nIt's over.\n";
+                    return false; // Treat as defeat
+                } else {
+                    cout << "\nContinuing the fight...\n";
+                    continue;
+                }
+            }
         }
         cout << endl;
         if (action == 2) {
