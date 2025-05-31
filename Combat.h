@@ -25,7 +25,7 @@ bool Combat(Player& player, Inventory& inv, Enemy& enemy) {
                 cout << "\nAre you sure you want to give up? (y/n)\n";
                 char confirm = _getch();
                 if (confirm == 'y' || confirm == 'Y') {
-                    cout << "\nIt's over.\n";
+                    cout << "\nYou gave up and got mauled by the " << enemy.getName() << ".\n";
                     return false; // Treat as defeat
                 } else {
                     cout << "\nContinuing the fight...\n";
