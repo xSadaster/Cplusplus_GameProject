@@ -32,7 +32,7 @@ public:
         }
     }
     void showInventory() const {
-        cout << "Potions: " << potions << "/" << maxPotions << endl;
+        cout << "Potions: " << potions << "/" << maxPotions << endl; // Display current potion count
     }
     int getCount() const { return potions; } // Getter for pot count
 };

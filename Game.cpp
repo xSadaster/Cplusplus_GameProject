@@ -13,8 +13,10 @@ using namespace std;
 int main() {
     srand(static_cast<unsigned int>(time(nullptr))); // Seed for random number generation
     
-    // Ask for player name and class
-    cout << "Enter your player name: ";
+    // Ask for player name and class and some lore
+    cout << "Welcome!\n";
+    cout << "The evil dragon has taken over the land, and you are the only one who can stop it.\n";
+    cout << "Enter your name, hero: ";
     string pname;
     getline(cin, pname);
     cout << "Choose your class:\n1. Warrior\n2. Tank\n3. Berserker\n> ";
@@ -47,8 +49,8 @@ int main() {
         02, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 11, 11, 11, 11, 11, 11, 11, 11, 02,
         02, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 11, 11, 11, 11, 11, 11, 11, 11, 02,
         02, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 02,
+        02, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 77, 10, 02,
         02, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 02,
-        02, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 77, 02,
         02, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 00,
     };
     int playerX = 2, playerY = 2; //Starting position
@@ -84,7 +86,7 @@ int main() {
             if (tile && tile->enemychance > 0.0f) { //if the tile has a chance for an enemy
                 float chance = static_cast<float>(rand()) / RAND_MAX; //Generate a random float between 0 and 1
                 if (chance < tile->enemychance) {
-                    // Example enemy using Enemy class
+                    // Enemy encounter
                     Enemy enemy("Goblin", 30 + rand() % 20, 6 + rand() % 5, "Goblin");
                     bool survived = Combat(*Playable_character, inv, enemy);
                     if (!survived) {
@@ -96,13 +98,13 @@ int main() {
                     }
                 }
             }
-            // Boss tile check
+            // Boss tile encounter
             if (tileIndex == 77) {
-                Enemy boss("BOSS", 120, 25, "Boss");
-                cout << "You have encountered the BOSS!\n";
+                Enemy boss("Dragon", 120, 25, "Boss");
+                cout << "You have encountered the Dragon!\n";
                 bool survived = Combat(*Playable_character, inv, boss);
                 if (survived) {
-                    cout << "\nCongratulations! You defeated the Boss and achieved the GOOD ENDING!\n";
+                    cout << "\nCongratulations! You defeated the Dragon and achieved the GOOD ENDING!\n";
                     delete Playable_character;
                     cout << "Press any key to exit...";
                     _getch();
