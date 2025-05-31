@@ -32,6 +32,8 @@ public:
     void setName(const string& n) { name = n; }
     void setHP(int h) { hp = h; }
     void setATK(int a) { atk = a; }
+    // Add virtual getType for runtime polymorphism
+    virtual string getType() const { return "Character"; }
 
     // Virtual functions
     virtual void show() const override {

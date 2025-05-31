@@ -8,8 +8,9 @@
 using namespace std;
 
 // Combat function: returns true if player wins, false if defeated
-bool Combat(Player& player, Inventory& inv, Enemy& enemy) {
-     system("cls"); // Clear the console before fight
+// Demonstrates runtime polymorphism by using Character& for both player and enemy
+bool Combat(Character& player, Inventory& inv, Character& enemy) {
+    system("cls"); // Clear the console before fight
     cout << "\n===== FIGHT: " << enemy.getName() << " =====\n";
     while (player.getHP() > 0 && enemy.getHP() > 0) /*As long as both entities are "alive"*/ {
         cout << "\nYour HP: " << player.getHP() << " | Enemy HP: " << enemy.getHP() << "\n";
@@ -45,11 +46,12 @@ bool Combat(Player& player, Inventory& inv, Enemy& enemy) {
             }
             continue;
         } else if (action == 3) {
-            cout << enemy << endl;
+            // Note: This will only work if operator<< is overloaded for Character or you cast to Enemy
+            cout << enemy.getName() << " (HP: " << enemy.getHP() << ", ATK: " << enemy.getATK() << ")" << endl;
             continue;
         }
         // Player attack 
-        player.act();
+        player.act(); // virtual call
         int dmg = player.getATK();
         cout << "The " << enemy.getName() << " takes " << dmg << " damage!\n" << endl;
         enemy.setHP(enemy.getHP() - dmg);
@@ -68,7 +70,7 @@ bool Combat(Player& player, Inventory& inv, Enemy& enemy) {
             return true;
         }
         // Enemy turn (polymorphic)
-        enemy.act();
+        enemy.act(); // virtual call
         int edmg = enemy.getATK();
         cout << "The " << enemy.getName() << " deals " << edmg << " damage to you!\n";
         player.setHP(player.getHP() - edmg);

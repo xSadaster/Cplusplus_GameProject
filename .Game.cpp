@@ -137,8 +137,10 @@ void gameplay_loop(Player* Playable_character, Inventory& inv, int* map1) {
                 float chance = static_cast<float>(rand()) / RAND_MAX;
                 if (chance < tile->enemychance) {
                     Enemy enemy = generateRandomEnemy();
-                    bool survived = Combat(*Playable_character, inv, enemy);
-                    if (survived) {
+                    Character& playerRef = *Playable_character; // Upcast to base class reference
+                    Character& enemyRef = enemy; // Upcast to base class reference
+                    bool win = Combat(playerRef, inv, enemyRef); // Now uses runtime polymorphism
+                    if (win) {
                         defeatedEnemies[enemy.getType()]++;
                     } else {
                         cout << "Game Over!\n";
