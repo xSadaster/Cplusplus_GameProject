@@ -1,6 +1,8 @@
 # C++ Game project made by
 ## Kalle, Papu & Akseli
 
+#TL;DR just download the .Game.exe and run it in CMD
+
 ## Controls
 Use **q** in map to exit the program.
 Use **wasd** to move.
