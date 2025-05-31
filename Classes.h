@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include <array>
 using namespace std;
 
 // Abstract Base Class
@@ -72,7 +71,7 @@ public:
     }
 };
 
-// Player subclasses for different classes
+// Tank class (defensive player)
 class Tank : public Player {
 public:
     Tank(string n = "Tank") : Player(n, 100, 10) {}
@@ -82,6 +81,7 @@ public:
     }
 };
 
+// Warrior class (balanced player)
 class Warrior : public Player {
 public:
     Warrior(string n = "Warrior") : Player(n, 80, 15) {}
@@ -91,6 +91,7 @@ public:
     }
 };
 
+// Berserker class (high attack player)
 class Berserker : public Player {
 public:
     Berserker(string n = "Berserker") : Player(n, 60, 25) {}
@@ -100,7 +101,7 @@ public:
     }
 };
 
-// Enemy subclass
+// Enemy class
 class Enemy : public Character {
 private:
     string type;
@@ -111,26 +112,24 @@ public:
 
     string getType() const { return type; }
     void setType(const string& t) { type = t; }
-
     void show() const override {
         cout << "[Enemy: " << type << "] ";
         Character::show();
     }
     void act() override {
-        cout << name << " Attacks!" << endl; //
+        cout << name << " Attacks!" << endl;
     }
-    // Operator overloading for output, has to use getters to access private members.
+    // Overload << for easy stat display
     friend ostream& operator<<(ostream& os, const Enemy& e) {
         os << "[Enemy: " << e.type << "] " << e.getName() << " [HP: " << e.getHP() << ", ATK: " << e.getATK() << "]";
         return os;
     }
 };
 
-// Boss subclass from enemy
+// Boss class (inherits Enemy)
 class Boss : public Enemy {
 public:
-    Boss(string n = "Dragon", int h = 120, int a = 25)
-        : Enemy(n, h, a, "Boss") {}
+    Boss(string n = "Dragon", int h = 120, int a = 25) : Enemy(n, h, a, "Boss") {}
     ~Boss() {}
     void act() override {
         cout << getName() << " breathes a massive wave of fire!" << endl;
