@@ -5,61 +5,77 @@
 #include <string>
 #include <cstdlib>
 #include <conio.h>
+#include "Inventory.h"
+
 using namespace std;
 
-struct EnemyAttack {
-    string name;
-    int minDamage, maxDamage;
-};
-struct Entity {
-    string name;
-    int hp, attack;
-    vector<EnemyAttack> attacks;
-};
-
-void combat(Entity& player, Entity enemy) {
-    cout << "\n💥 Enemy encountered: " << enemy.name << " (HP: " << enemy.hp << ")\n";
-    while (player.hp > 0 && enemy.hp > 0) {
-        cout << "\n--- Player Turn ---\n";
-        cout << "Choose an attack:\n";
-        for (size_t i = 0; i < player.attacks.size(); ++i)
-            cout << i + 1 << ". " << player.attacks[i].name << "\n";
-        int choice;
-        cin >> choice;
-        if (choice < 1 || choice > static_cast<int>(player.attacks.size())) {
-            cout << "Invalid choice. Using default attack.\n";
-            int dmg = player.attack;
-            cout << "You attack the " << enemy.name << " for " << dmg << " damage!\n";
-            enemy.hp -= dmg;
-        } else {
-            EnemyAttack selectedAttack = player.attacks[choice - 1];
-            int dmg = selectedAttack.minDamage + (rand() % (selectedAttack.maxDamage - selectedAttack.minDamage + 1));
-            cout << "You use " << selectedAttack.name << " and deal " << dmg << " damage!\n";
-            enemy.hp -= dmg;
-        }
-        if (enemy.hp <= 0) {
-            cout << "✅ You defeated the " << enemy.name << "!\n";
+// Combat function
+bool Combat(Player& player, Inventory& inv, Enemy& enemy) {
+    cout << "\n===== FIGHT: " << enemy.getName() << " =====\n";
+    while (player.getHP() > 0 && enemy.getHP() > 0) {
+        cout << "\nYour HP: " << player.getHP() << " | Enemy HP: " << enemy.getHP() << "\n";
+        inv.showInventory();
+        cout << "Choose action: 1. Attack  2. Use Potion  3. Check Enemy Stats\n> ";
+        int action;
+        while (true) {
+            if (!(cin >> action)) {
+                cin.clear();
+                cin.ignore(10000, '\n');
+                cout << "Invalid input. Please enter a number (1, 2, or 3): ";
+                continue;
+            }
+            if (action < 1 || action > 3) {
+                cout << "Invalid choice. Please enter 1, 2, or 3: ";
+                continue;
+            }
             break;
         }
-        cout << "--- Enemy Turn ---\n";
-        if (!enemy.attacks.empty()) {
-            const EnemyAttack& atk = enemy.attacks[rand() % enemy.attacks.size()];
-            int dmg = atk.minDamage + (rand() % (atk.maxDamage - atk.minDamage + 1));
-            cout << "The " << enemy.name << " uses " << atk.name << " and hits you for " << dmg << " damage!\n";
-            player.hp -= dmg;
-        } else {
-            cout << "The " << enemy.name << " hits you for " << enemy.attack << " damage!\n";
-            player.hp -= enemy.attack;
+        if (action == 2) {
+            if (inv.getCount() > 0) {
+                inv.usePotion();
+                player.setHP(player.getHP() + 20);
+                cout << "Healed! Current HP: " << player.getHP() << "\n";
+            } else {
+                cout << "No potions left!\n";
+            }
+            continue;
+        } else if (action == 3) {
+            cout << enemy << endl;
+            continue; // Does not take a turn
         }
-        if (player.hp <= 0) {
-            cout << "❌ You have been defeated!\n";
+        // Player attack (polymorphic)
+        player.act();
+        int dmg = player.getATK();
+        cout << "The " << enemy.getName() << " takes " << dmg << " damage!\n";
+        enemy.setHP(enemy.getHP() - dmg);
+        if (enemy.getHP() <= 0) {
+            cout << "You defeated the " << enemy.getName() << "!\n";
+            cout << "Press e to continue..." << endl;
+            char cont;
+            do {
+                cont = _getch();
+            } while (cont != 'e' && cont != 'E');
             break;
         }
-        cout << "Your HP: " << player.hp << " | Enemy HP: " << enemy.hp << "\n";
-        cout << "Press any key for next turn...\n";
-        _getch();
+        // Enemy turn (polymorphic)
+        enemy.act();
+        int edmg = enemy.getATK();
+        cout << "The " << enemy.getName() << " hits you for " << edmg << " damage!\n";
+        player.setHP(player.getHP() - edmg);
+        if (player.getHP() <= 0) {
+            cout << player.getName() << " has perished\n";
+            break;
+        }
     }
-    cout << "\nPress any key to continue...\n";
-    _getch();
+    if (player.getHP() > 0) {
+        // 30% chance to find a potion after victory, and only if inventory is not full
+        if (inv.getCount() < 3 && (rand() % 100) < 30) {
+            inv.addPotion();
+            cout << "You found a Potion!\n";
+        }
+        return true;
+    } else {
+        return false;
+    }
 }
 #endif // COMBAT_H_INCLUDED

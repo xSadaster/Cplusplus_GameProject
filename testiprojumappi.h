@@ -1,12 +1,12 @@
 /*
 kommentti jatkuu lisäykseen
-1. void printmap(const int map[map_H * map_W], const tileproperties& puu,const tileproperties& vesi,const tileproperties& tie,const tileproperties& kivi,const tileproperties& copy,const tileproperties& endblock, const tileproperties& barrierpysty, const tileproperties& barriervaaka, int playerX, int playerY) {
- korvaa const tileproperties& copy 
+1. void printmap(const int map[map_H * map_W], const tileproperties& puu,const tileproperties& vesi,const tileproperties& tie_tile,const tileproperties& kivi,const tileproperties& copy_tile,const tileproperties& endblock, const tileproperties& barrierpysty, const tileproperties& barriervaaka, int playerX, int playerY) {
+ korvaa const tileproperties& copy_tile 
  2. else if (value == 13) {
                 std::cout << kivi.colour << kivi.gf << RESET;
             }
     else if (value == 99) {
-                std::cout << copy.colour << copy.gf << RESET;
+                std::cout << copy_tile.colour << copy_tile.gf << RESET;
             }
     korvaa omalla valuella sekä muuttujat
     jatkuu tileproperties ===>
@@ -34,10 +34,10 @@ struct tileproperties {
     float enemychance = 0.0f; 
 };
 
-const int map_W = 20;
-const int map_H = 10;
+const int map_W = 40;
+const int map_H = 20;
 
- void printmap(const int map[map_H * map_W], const tileproperties& puu,const tileproperties& vesi,const tileproperties& tie,const tileproperties& kivi,const tileproperties& copy,const tileproperties& endblock, const tileproperties& barrierpysty, const tileproperties& barriervaaka, int playerX, int playerY) {
+ void printmap(const int map[map_H * map_W], const tileproperties& puu,const tileproperties& vesi,const tileproperties& tie_tile,const tileproperties& kivi,const tileproperties& copy_tile,const tileproperties& endblock, const tileproperties& barrierpysty, const tileproperties& barriervaaka, int playerX, int playerY) {
     std::cout << CURSOR_TOP_LEFT;
     for (int i = 0; i < map_H; i++) {
         for (int j = 0; j < map_W; j++) {
@@ -57,11 +57,11 @@ const int map_H = 10;
             } else if (value == 11) {
                 std::cout << vesi.colour << vesi.gf << RESET;
             } else if (value == 12) {
-                std::cout << tie.colour << tie.gf << RESET;
+                std::cout << tie_tile.colour << tie_tile.gf << RESET;
             }else if (value == 13) {
                 std::cout << kivi.colour << kivi.gf << RESET;
             }else if (value == 99) {
-                std::cout << copy.colour << copy.gf << RESET;
+                std::cout << copy_tile.colour << copy_tile.gf << RESET;
             } else {
                 std::cout << value;
             }

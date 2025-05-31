@@ -37,11 +37,11 @@ tileproperties puu {
     'A',
     GREEN,
 };
-tileproperties tie {
+tileproperties tie_tile {
     0, // 0 = no, 1 = yes
     'H',
     BROWN,
-    0.75f
+    0.75f // Chance for enemy spawn
 };
 
 tileproperties vesi {
@@ -53,7 +53,7 @@ tileproperties kivi {
     1, // 0 = no, 1 = yes
     'M',
     GRAY,
-};tileproperties copy {
+};tileproperties copy_tile {
     1, // 0 = no, 1 = yes
     '~',
     BLUE,
