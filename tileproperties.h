@@ -1,77 +1,40 @@
-/* 
-tileproperties copy {
-    1, // 1 = no, 0 = yes
-    '~',
-    BLUE,
-};
-
-korvaa nimi 
-ensimmäinen rivi = voiko siihen liikkua
-toinen = mikä grafiikka
-kolmas = väri
-neljäs = vihujen chännssi jumppaa sut
-
-jatkuu wasdmove.h ====>
-
+/*
+  tileproperties.h
+  - Defines tile types and their properties for the map.
+  - Each tile has: walkability, glyph, color, and enemy spawn rate.
 */
 
 #include <string>
 #include "testiprojumappi.h"
+
 tileproperties barriervaaka {
-    1,
-    '-',
-    GRAY,
+    1, '-', GRAY,
 };
 tileproperties barrierpysty {
-    1,
-    '|',
-    GRAY,
+    1, '|', GRAY,
 };
-tileproperties endblock { //corners of the map
-    1, // 1 = no, 0 = yes
-    '+',
-    GRAY,
+tileproperties endblock {
+    1, '+', GRAY,
 };
 tileproperties puu {
-    0, // 1 = no, 0 = yes
-    'A',
-    GREEN,
-    0.01f // 1% Chance for enemy to spawn
+    0, 'A', GREEN, 0.01f // 1% enemy spawn
 };
 tileproperties tie_tile {
-    0, // 1 = no, 0 = yes
-    'H',
-    BROWN,
-    0.75f // 75% Chance for enemy to spawn
+    0, 'H', BROWN, 0.75f // 75% enemy spawn
 };
-
 tileproperties vesi {
-    1, // 1 = no, 0 = yes
-    '~',
-    BLUE,
+    1, '~', BLUE,
 };
 tileproperties kivi {
-    1, // 1 = no, 0 = yes
-    'M',
-    GRAY,
-};tileproperties copy_tile {
-    1, // 1 = no, 0 = yes
-    '~',
-    BLUE,
+    1, 'M', GRAY,
 };
-//added boss tile
+tileproperties copy_tile {
+    1, '~', BLUE,
+};
 tileproperties boss_tile {
-    0, // 0 = walkable
-    'B',
-    YELLOW,
-    // 1.0f // Always triggers a fight- 
-    //EDIT: Removed and made separate logic to check for boss tile to start special fight
+    0, 'B', RED,
+    // Enemy spawn chance handled in logic
 };
-
-// Added a.. suspicious "shop" tile
 tileproperties shop_tile {
-    0, // walkable
-    'S',
-    YELLOW,
-    0.0f // No enemy spawn
+    0, 'S', YELLOW, 0.0f // No enemy spawn
 };

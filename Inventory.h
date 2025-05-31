@@ -7,8 +7,8 @@ private:
     int potions;
     const int maxPotions = 3;
 public:
-    Inventory() : potions(2) {} // Start with 2 potions for ease of use, was a hassle before.
-
+    Inventory() : potions(2) {} // Start with 2 potions
+    // Add a potion if not full
     bool addPotion() {
         if (potions < maxPotions) {
             ++potions;
@@ -19,19 +19,20 @@ public:
             return false;
         }
     }
+    // Use a potion if available
     bool usePotion() {
         if (potions > 0) {
             --potions;
             cout << "Used a potion! Potions left: " << potions << endl;
-            // The hp restoration code could've been here, but it was easier to handle in combat
             return true;
         } else {
             cout << "No potions left!" << endl;
             return false;
         }
     }
+    // Show potion count
     void showInventory() const {
-        cout << "Potions: " << potions << "/" << maxPotions << endl; // Display current potion count
+        cout << "Potions: " << potions << "/" << maxPotions << endl;
     }
-    int getCount() const { return potions; } // Getter for pot count
+    int getCount() const { return potions; }
 };
