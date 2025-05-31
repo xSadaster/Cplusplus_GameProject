@@ -6,8 +6,6 @@
 #include <conio.h> // For _getch() (input handling)
 #include <cstdlib> // For random number generation
 #include <ctime> // For time(), also a part of the random number generation
-#include <vector> 
-#include <string>
 #include <map>
 using namespace std;
 
@@ -103,7 +101,27 @@ void gameplay_loop(Player* Playable_character, Inventory& inv, int* map1) {
         system("cls");
         printmap(map1, puu, vesi, tie_tile, kivi, copy_tile, endblock, barrierpysty, barriervaaka, boss_tile, shop_tile, playerX, playerY);
         char key = _getch();
-        if (key == 'q') break;
+        
+        if (key == 'q') { //added confirmation to exit
+        cout << "Are you sure you want to quit? (y/n)\n";
+            char confirm = _getch();
+            if (confirm == 'y' || confirm == 'Y') {
+                cout << "Thanks for playing!\n";
+                cout << "Enemies defeated this run:\n";
+                for (const auto& pair : defeatedEnemies) {
+                    cout << pair.first << ": " << pair.second << endl;
+                }
+                delete Playable_character;
+                cout << "Press any key to exit...";
+                _getch();
+                return; // Exit the game
+            } else {
+                continue; // Continue the game
+            }
+            break; // Exit the game
+        }
+
+
         int newX = playerX, newY = playerY;
         if (key == 'w') newX--;
         else if (key == 's') newX++;
@@ -167,11 +185,12 @@ void gameplay_loop(Player* Playable_character, Inventory& inv, int* map1) {
             if (tileIndex == 55) { // Shop tile
                 system("cls");
                 cout << "A shady looking person claims they can convert your health to attack damage, \ndo you accept their deal? (lose 20hp gain 2atk)\n";
+                cout << "Current stats \nHP: " << Playable_character->getHP() << " ATK: " << Playable_character->getATK() << "\n";
                 cout << "1: Yes\n2: No\n> ";
                 char shopChoice = 0;
                 while (true) {
                     shopChoice = _getch();
-                    if (shopChoice == '1' || shopChoice == '2') break;
+                    if (shopChoice == '1' || shopChoice == '2') break; // valid input
                 }
                 if (shopChoice == '1') {
                     if (Playable_character->getHP() > 20) {
