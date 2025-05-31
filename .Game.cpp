@@ -47,7 +47,7 @@ Player* createPlayer() {
     string pname;
     getline(cin, pname);
     cout << "Choose your class:\n1. Warrior\n2. Tank\n3. Berserker\n> ";
-    int classChoice = 1;
+    int classChoice = 1; //default to Warrior (balanced)
     char classKey = 0;
     while (true) {
         classKey = _getch();
@@ -60,11 +60,10 @@ Player* createPlayer() {
         } else if (classKey == '3') {
             classChoice = 3;
             break;
-        }
-    }
+        }}
     if (classChoice == 2) return new Tank(pname);
     else if (classChoice == 3) return new Berserker(pname);
-    else return new Warrior(pname);
+    else return new Warrior(pname); // Default to Warrior if no valid choice
 }
 
 // Function to set up the map
@@ -93,15 +92,15 @@ void setupMap(int* map1) {
     };
     for (int i = 0; i < map_H * map_W; ++i) map1[i] = temp[i];
 }
-// The game runs on this.
+
+// The game whole game runs in this function
 void gameplay_loop(Player* Playable_character, Inventory& inv, int* map1) {
     int playerX = 2, playerY = 2;
-    std::map<std::string, int> defeatedEnemies; // Track defeated enemy types
+    map<string, int> defeatedEnemies; // Track defeated enemy types
     while (true) {
         system("cls");
         printmap(map1, puu, vesi, tie_tile, kivi, copy_tile, endblock, barrierpysty, barriervaaka, boss_tile, shop_tile, playerX, playerY);
         char key = _getch();
-        
         if (key == 'q') { //added confirmation to exit
         cout << "Are you sure you want to quit? (y/n)\n";
             char confirm = _getch();
