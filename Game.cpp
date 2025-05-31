@@ -48,13 +48,13 @@ int main() {
         02, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 12, 12, 11, 11, 11, 11, 11, 11, 11, 11, 02,
         02, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 02,
         02, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 02,
-        02, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 02,
+        02, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 13, 13, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 77, 02,
         02, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 01, 00,
     };
     int playerX = 2, playerY = 2; //Starting position
     while (true) {
         system("cls"); // Clear the console
-        printmap(map1, puu, vesi, tie_tile, kivi, copy_tile, endblock, barrierpysty, barriervaaka, playerX, playerY);
+        printmap(map1, puu, vesi, tie_tile, kivi, copy_tile, endblock, barrierpysty, barriervaaka, boss_tile, playerX, playerY);
         char key = _getch();
         if (key == 'q') break; // Exit the game
 
@@ -94,6 +94,25 @@ int main() {
                         _getch(); // Wait for user input before closing
                         return 0;
                     }
+                }
+            }
+            // Boss tile check
+            if (tileIndex == 77) {
+                Enemy boss("BOSS", 120, 25, "Boss");
+                cout << "You have encountered the BOSS!\n";
+                bool survived = Combat(*Playable_character, inv, boss);
+                if (survived) {
+                    cout << "\nCongratulations! You defeated the Boss and achieved the GOOD ENDING!\n";
+                    delete Playable_character;
+                    cout << "Press any key to exit...";
+                    _getch();
+                    return 0;
+                } else {
+                    cout << "Game Over!\n";
+                    delete Playable_character;
+                    cout << "Press any key to exit...";
+                    _getch();
+                    return 0;
                 }
             }
         }

@@ -1,6 +1,12 @@
-# Cplusplus_GameProject
-A simple game project in C++
+Korjailin turhia asioita pois ja koitin täyttää vaatimuksia
+-Papu
+Nyt nukkumaan, gg.
 
-Map tile adding instructions in map files (only finnish for time being)
-
-jos teette muutoksii nii kommatkaa sinne yms jotai tietoo jos muistaa nii ei mee iha hömelöks mitä tapahtuu
+Requirement	Status
+Class Design: good
+Polymorphism: Vähintään osittain hyvä
+Operator Overloading: Lisätty, combatissa inspect tyylinen ominaisuus (Enemy stats)
+Overloading Constructors Yeah
+Dynamic Object Creation Yup
+Data Structures	Muutamia, Struct, array for map..
+Using Namespace- Well, Standard? Not sure oisko pitäny käyttää omaa

@@ -58,3 +58,9 @@ tileproperties kivi {
     '~',
     BLUE,
 };
+tileproperties boss_tile {
+    0, // 0 = walkable
+    'B',
+    YELLOW,
+    1.0f // Always triggers boss fight
+};
