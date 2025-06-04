@@ -1,21 +1,21 @@
 #pragma once
 #include <iostream>
-using namespace std;
+#define MAX_POTIONS 3 // Maximum potions in inventory
 
 class Inventory {
 private:
-    int potions;
-    const int maxPotions = 3;
+    unsigned short potions;
+    unsigned short maxPotions = MAX_POTIONS; // Maximum potions allowed
 public:
     Inventory() : potions(2) {} // Start with 2 potions
     // Add a potion if not full
     bool addPotion() {
         if (potions < maxPotions) {
             ++potions;
-            cout << "Picked up a potion! Total potions: " << potions << endl;
+            std::cout << "Picked up a potion! Total potions: " << potions << std::endl;
             return true;
         } else {
-            cout << "Your bag is full!" << endl;
+            std::cout << "Your bag is full!" << std::endl;
             return false;
         }
     }
@@ -23,16 +23,16 @@ public:
     bool usePotion() {
         if (potions > 0) {
             --potions;
-            cout << "Used a potion! Potions left: " << potions << endl;
+            std::cout << "Used a potion! Potions left: " << potions << std::endl;
             return true;
         } else {
-            cout << "No potions left!" << endl;
+            std::cout << "No potions left!" << std::endl;
             return false;
         }
     }
     // Show potion count
     void showInventory() const {
-        cout << "Potions: " << potions << "/" << maxPotions << endl;
+        std::cout << "Potions: " << potions << "/" << maxPotions << std::endl;
     }
-    int getCount() const { return potions; }
+    unsigned short getCount() const { return potions; }
 };
