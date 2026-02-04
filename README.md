@@ -1,7 +1,7 @@
 # C++ Game project made by
 ## Kalle, Papu & Akseli
 
-#To play: Download the .Game.exe and run it
+# To play: Download the .Game.exe and run it
 
 ## Controls
 Use **q** in map or combat for a prompt to exit the program.
@@ -16,7 +16,7 @@ Enemies have a slight chance of spawning in the forest e.g. green ('A') ~1% chan
 but mainly do it on the bridges ('H'). ~75%
 Drinking a potion or checking enemy stats doesn't take your "turn" in combat.
 
-#This project was developed as part of a school assignment to practice C++ programming and uses the following methods.
+# This project was developed as part of a school assignment to practice C++ programming and uses the following methods.
 
 Class Design & OOP (Object-oriented programming) Hierarchy.
 Abstract base class: GameComponent (Purely virtual).
